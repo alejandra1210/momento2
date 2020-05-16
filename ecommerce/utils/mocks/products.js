@@ -1,16 +1,29 @@
 const productMocks = [
     {
-      id:"1",
-      name: "Galletas",
-      price: 7500,
-      image:url("/static/imagenes/ducales.jpg")
+        id: "1",
+        name: "Galletas",
+        price: 4000,
+        image: "/static/images/ducales.jpg"
     },
     {
-      id:"2",
-      name: "Pastas",
-      price: 300,
-      image: url("/static/imagenes/pastas.jpg")
+        id: "2",
+        name: "Pastas",
+        price: 3000,
+        image: "/static/images/pastas.jpg"
+    },
+    {
+        id: "3",
+        name: "Helado",
+        price: 3000,
+        image: "/static/images/bocatto.jpg"
+    },
+    
+    {
+        id: "4",
+        name: "Cafe",
+        price: 5000,
+        image: "/static/images/cafe.jpg"
     }
-  ];
+];
 
-  module.exports = productMocks;
+module.exports = productMocks;

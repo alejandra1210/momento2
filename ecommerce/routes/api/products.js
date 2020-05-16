@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const product = require('../../utils/mocks/products');
+const productMocks = require('../../utils/mocks/products'); //donde estan los products la data
 
-router.get('/', function(req, res) {
-    const { query } = req.query;
+router.get('/', function (req, res) {
+    const {query} = req.query;
 
     res.status(200).json({
         data: productMocks,
@@ -11,47 +11,61 @@ router.get('/', function(req, res) {
     });
 });
 
-router.get('/:productId', function(req, res) {
-    const { productId } = req.params;
+router.get('/:productId', function (req, res) {
+    const {productId} = req.params;
+
+    const product = productMocks.filter(p => p.id == productId);
 
     res.status(200).json({
-        data: productMocks[productId],
+        data: product,
         message: 'product retrieved'
     });
 });
 
-router.post('/', function(req, res) {
+router.post('/', function (req, res) {
+    const product = {
+        id: req.body.id,
+        name: req.body.name,
+        price: req.body.price,
+        image: req.body.image,
+    };
 
-    
-     const message = {
-    id,
-    text: req.body.text,
-    userId: req.me.id,
-  };
+    productMocks.push(product);
 
-  messages[id] = message;
-
-  return res.send(message);
-   
-   // res.status(201).json({
-     //   data: productMocks[0],
-       // message: 'products listed'
-    //});
-});
-
-router.put('/:productId', function(req, res) {
-
-    res.status(200).json({
-        data: productMocks,
-        message: 'products updated'
+    res.status(201).json({
+        data: product,
+        message: 'product created'
     });
 });
 
-router.delete('/', function(req, res) {
+router.put('/:productId', function (req, res) {
+    const {productId} = req.params;
+
+    const productWithNewData = {
+        name: req.body.name,
+        price: req.body.price,
+        image: req.body.image,
+    };
+
+    let productIndex = productMocks.findIndex(p => p.id == productId); //para que nos lleve el mismo id y no se borre cuando actualiza 
+    let currentProduct = productMocks[productIndex];
+    productMocks[productIndex] = Object.assign(currentProduct, productWithNewData);
 
     res.status(200).json({
-        data: productMocks[0],
-        message: 'products deleted'
+        data: productMocks[productIndex],
+        message: 'product updated'
+    });
+});
+
+router.delete('/:productId', function (req, res) {
+    const {productId} = req.params;
+
+    let productIndex = productMocks.findIndex(p => p.id == productId);
+    productMocks.splice(productIndex, 1);
+
+    res.status(200).json({
+        data: productMocks,
+        message: 'product deleted'
     });
 });
 
